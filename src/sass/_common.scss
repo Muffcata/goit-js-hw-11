@@ -1,1 +1,66 @@
 @import '~node_modules/modern-normalize/modern-normalize.css';
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@700&family=Roboto:wght@400;500;700;900&display=swap');
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Roboto', 'Raleway', sans-serif;
+  line-height: 1.5;
+  color: var(--brand-color);
+  background-color: var(--white-color);
+
+  margin: auto;
+}
+ul {
+  list-style: none;
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .container {
+    padding: 0 15px;
+    margin: auto;
+  }
+  .section {
+    padding-bottom: 60px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    max-width: 768px;
+    padding: 0 15px;
+    margin: auto;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .container {
+    max-width: 1200px;
+    padding: 0 15px;
+    align-content: center;
+    margin: auto;
+  }
+  .section {
+    padding-bottom: 94px;
+    padding-top: 94px;
+  }
+}
