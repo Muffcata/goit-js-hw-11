@@ -5,15 +5,28 @@
   background-color: rgb(93, 0, 255);
   justify-content: center;
 
-  &__btn {
-    width: 23px;
-    heigth: 23px;
-    margin: 0;
-  }
-  &__svg {
+  &__box {
     display: flex;
+    box-sizing: border-box;
+    border-radius: 4px;
   }
-}
-input {
-  padding-right: 77px;
+  &__input {
+    width: 100%;
+    background-color: rgb(243, 244, 250);
+    font-weight: 300;
+    outline: none;
+  }
+  &__btn {
+    margin: 0;
+    border-style: none;
+    border-color: black;
+    cursor: pointer;
+  }
+  &__icon {
+    display: flex;
+    width: 36px;
+    height: 18px;
+    align-items: center;
+    background-color: rgb(243, 244, 250);
+  }
 }
