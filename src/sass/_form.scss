@@ -4,6 +4,15 @@
   padding-bottom: 20px;
   background-color: rgb(93, 0, 255);
   justify-content: center;
+
+  &__btn {
+    width: 23px;
+    heigth: 23px;
+    margin: 0;
+  }
+  &__svg {
+    display: flex;
+  }
 }
 input {
   padding-right: 77px;
