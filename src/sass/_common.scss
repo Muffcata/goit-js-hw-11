@@ -33,34 +33,3 @@ body {
 ul {
   list-style: none;
 }
-
-@media screen and (min-width: 320px) and (max-width: 767px) {
-  .container {
-    padding: 0 15px;
-    margin: auto;
-  }
-  .section {
-    padding-bottom: 60px;
-  }
-}
-
-@media screen and (min-width: 768px) {
-  .container {
-    max-width: 768px;
-    padding: 0 15px;
-    margin: auto;
-  }
-}
-
-@media screen and (min-width: 1200px) {
-  .container {
-    max-width: 1200px;
-    padding: 0 15px;
-    align-content: center;
-    margin: auto;
-  }
-  .section {
-    padding-bottom: 94px;
-    padding-top: 94px;
-  }
-}
