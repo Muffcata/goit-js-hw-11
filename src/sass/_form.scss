@@ -1,3 +1,9 @@
+@mixin transition {
+  transition-property: color;
+  transition-duration: 250ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .search-form {
   display: flex;
   padding-top: 20px;
@@ -19,13 +25,18 @@
   &__btn {
     margin: 0;
     border-style: none;
-    border-color: black;
     cursor: pointer;
+    &:focus,
+    &:hover {
+      background-color: 1px solid rgb(7, 101, 141);
+      outline: none;
+      @include transition;
+    }
   }
   &__icon {
     display: flex;
-    width: 36px;
-    height: 18px;
+    width: 27px;
+    height: 14px;
     align-items: center;
     background-color: rgb(243, 244, 250);
   }
