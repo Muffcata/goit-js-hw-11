@@ -9,17 +9,17 @@ const gallery = document.querySelector('.gallery');
 const button = document.querySelector('.btn-box__btn');
 const API_KEY = '33110181-05f7c31bd0648b87ed812e30c';
 
-// const checkInput = () => {
-//   fetchGallery(input.value)
-//     .then(elements => {
-//       renderPhotos(elements);
-//     })
-//     .catch(error => {
-//       Notiflix.Notify.failure('Oops, there is no country with that name');
-//     });
-// };
+const checkInput = () => {
+  fetchGallery(input.value)
+    .then(elements => {
+      renderPhotos(elements);
+    })
+    .catch(error => {
+      Notiflix.Notify.failure('Oops, there is no country with that name');
+    });
+};
+
 const renderPhotos = elements => {
-  const elements = newName;
   if (elements.length) {
     const markup = elements.map(
       ({
@@ -90,4 +90,5 @@ const renderPhotos = elements => {
 //     </div>
 //   </div>`
 //       .join("");
+
 button.addEventListener('submit', checkInput);

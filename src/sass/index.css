@@ -79,4 +79,8 @@ input {
   display: flex;
   justify-content: center;
   cursor: pointer;
+}
+
+.gallery {
+  display: flex;
 }/*# sourceMappingURL=index.css.map */
