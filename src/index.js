@@ -1,4 +1,4 @@
-import axios from 'axios';
+// import axios from 'axios';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import { fetchGallery } from './fetchGallery';
@@ -7,15 +7,15 @@ const form = document.querySelector('.search-form');
 const input = document.querySelector('input[name="searchQuery"]');
 const gallery = document.querySelector('.gallery');
 const button = document.querySelector('.btn-box__btn');
-const API_KEY = '33110181-05f7c31bd0648b87ed812e30c';
 
-const checkInput = () => {
+const checkInput = e => {
+  e.preventDefault();
   fetchGallery(input.value)
-    .then(elements => {
-      renderPhotos(elements);
+    .then(res => {
+      renderPhotos(res.hits);
     })
     .catch(error => {
-      Notiflix.Notify.failure('Oops, there is no country with that name');
+      // Notiflix.Notify.failure('Oops, there is no country with that name');
     });
 };
 
@@ -91,4 +91,4 @@ const renderPhotos = elements => {
 //   </div>`
 //       .join("");
 
-button.addEventListener('submit', checkInput);
+form.addEventListener('submit', e => checkInput(e));
