@@ -1,3 +1,13 @@
 .gallery {
   display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 8px;
+}
+.photo-card {
+}
+.info {
+}
+
+.info-item {
 }
