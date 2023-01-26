@@ -1,0 +1,82 @@
+@import '~node_modules/modern-normalize/modern-normalize.css';
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@700&family=Roboto:wght@400;500;700;900&display=swap");
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Roboto", "Raleway", sans-serif;
+  line-height: 1.5;
+  color: var(--brand-color);
+  background-color: var(--white-color);
+  margin: auto;
+}
+
+ul {
+  list-style: none;
+}
+
+.container {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: rgb(93, 0, 255);
+  display: flex;
+  justify-content: center;
+}
+
+.search-form {
+  display: inline-block;
+  height: 22px;
+  border-radius: 2px;
+  border: none;
+  width: 24%;
+  position: relative;
+  top: 1px;
+}
+.search-form__box {
+  display: flex;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+
+input {
+  width: 100%;
+}
+
+.btn-box {
+  float: right;
+  position: relative;
+  cursor: pointer;
+  opacity: 0.7;
+  top: -23px;
+}
+.btn-box__btn {
+  position: relative;
+  width: 29px;
+  height: 23px;
+}
+.btn-box__icon {
+  width: 25px;
+  height: 13px;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}/*# sourceMappingURL=index.css.map */
