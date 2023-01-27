@@ -2,11 +2,13 @@
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import { fetchGallery } from './fetchGallery';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const form = document.querySelector('.search-form');
 const input = document.querySelector('input[name="searchQuery"]');
 const gallery = document.querySelector('.gallery');
-const button = document.querySelector('.btn-box__btn');
+
+let sumImages = 0;
 
 const checkInput = e => {
   e.preventDefault();
@@ -14,13 +16,18 @@ const checkInput = e => {
     .then(res => {
       renderPhotos(res.hits);
     })
-    .catch(error => {
-      // Notiflix.Notify.failure('Oops, there is no country with that name');
-    });
+    .then(() => new SimpleLightbox('.gallery a').refresh())
+
+    .catch(error => {});
 };
 
 const renderPhotos = elements => {
-  if (elements.length) {
+  sumImages += elements.length;
+  if (sumImages === 0) {
+    Notify.failure(
+      'Sorry, there are no images matching your search query. Please try again.'
+    );
+  } else if (elements.length) {
     const markup = elements.map(
       ({
         webformatURL,
