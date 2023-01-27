@@ -1,4 +1,4 @@
-// import axios from 'axios';
+import axios from 'axios';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import { fetchGallery } from './fetchGallery';
@@ -7,8 +7,6 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 const form = document.querySelector('.search-form');
 const input = document.querySelector('input[name="searchQuery"]');
 const gallery = document.querySelector('.gallery');
-
-let sumImages = 0;
 
 const checkInput = e => {
   e.preventDefault();
@@ -27,17 +25,18 @@ const renderPhotos = elements => {
       'Sorry, there are no images matching your search query. Please try again.'
     );
   } else if (elements.length) {
-    const markup = elements.map(
-      ({
-        webformatURL,
-        largeImageURL,
-        tags,
-        likes,
-        views,
-        comments,
-        downloads,
-      }) => {
-        return `<div class="photo-card">
+    const markup = elements
+      .map(
+        ({
+          webformatURL,
+          largeImageURL,
+          tags,
+          likes,
+          views,
+          comments,
+          downloads,
+        }) => {
+          return `<div class="photo-card">
    <a href="${webformatURL}">
     <img src="${largeImageURL}" alt="${tags}" loading="lazy" /></a>
     <div class="info">
@@ -55,8 +54,9 @@ const renderPhotos = elements => {
       </p>
     </div>
   </div>`;
-      }
-    );
+        }
+      )
+      .join('');
     gallery.innerHTML = markup;
   }
 };
