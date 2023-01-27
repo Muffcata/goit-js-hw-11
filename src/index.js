@@ -22,8 +22,7 @@ const checkInput = e => {
 };
 
 const renderPhotos = elements => {
-  sumImages += elements.length;
-  if (sumImages === 0) {
+  if (elements.length === 0) {
     Notify.failure(
       'Sorry, there are no images matching your search query. Please try again.'
     );
