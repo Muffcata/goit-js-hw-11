@@ -6,17 +6,26 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 const form = document.querySelector('.search-form');
 const input = document.querySelector('input[name="searchQuery"]');
 const gallery = document.querySelector('.gallery');
+const moreImages = document.querySelector('.load-more');
+let page = 1;
+const previousName = '';
+const sumOfImages = 0;
 
 const checkInput = e => {
   e.preventDefault();
-  fetchGallery(input.value)
+  fetchGallery(input.value, page)
     .then(res => {
-      renderPhotos(res.hits);
+      renderPhotos(res.hits, res.totalHits);
+      page += 1;
+      if (page > 1) {
+        moreImages.classList.remove = '';
+      } else if (page < 1) {
+        gallery.innerHTML = '';
+      }
     })
     .then(() => new SimpleLightbox('.gallery a').refresh())
-
     .catch(error => {
-      console.log();
+      console.log(error);
     });
 };
 
@@ -59,7 +68,19 @@ const renderPhotos = elements => {
       )
       .join('');
     gallery.innerHTML = markup;
+
+    if (previousName !== elements.length) {
+      Notify.success(`Hooray! We found ${elements.totalHits} images.`);
+      gallery.innerHTML = markup;
+    }
+    console.log('ilość:');
   }
 };
 
+loadMore = () => {
+  page += 1;
+  checkInput();
+};
+
 form.addEventListener('submit', checkInput);
+moreImages.addEventListener('click', loadMore);
