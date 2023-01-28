@@ -16,7 +16,9 @@ const checkInput = e => {
     })
     .then(() => new SimpleLightbox('.gallery a').refresh())
 
-    .catch(error => {});
+    .catch(error => {
+      error;
+    });
 };
 
 const renderPhotos = elements => {
