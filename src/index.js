@@ -1,4 +1,4 @@
-import axios from 'axios';
+// import axios from 'axios';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import { fetchGallery } from './fetchGallery';
@@ -17,7 +17,7 @@ const checkInput = e => {
     .then(() => new SimpleLightbox('.gallery a').refresh())
 
     .catch(error => {
-      error;
+      console.log();
     });
 };
 
