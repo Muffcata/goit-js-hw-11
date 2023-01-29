@@ -25,7 +25,7 @@ const checkInput = e => {
 
 const renderPhotos = (elements, allHits) => {
   maxPages = allHits / 40;
-  if (page > 1) {
+  if (maxPages > 1) {
     moreImages.classList.remove('hidden');
   } else if (page <= 1) {
     gallery.innerHTML = '';
