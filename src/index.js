@@ -9,7 +9,6 @@ const gallery = document.querySelector('.gallery');
 const moreImages = document.querySelector('.load-more');
 let page = 1;
 const previousName = '';
-const sumOfImages = 0;
 
 const checkInput = e => {
   e.preventDefault();
@@ -18,9 +17,9 @@ const checkInput = e => {
       renderPhotos(res.hits, res.totalHits);
       page += 1;
       if (page > 1) {
-        moreImages.classList.remove = '';
+        moreImages.classList.remove('hidden');
       } else if (page < 1) {
-        gallery.innerHTML = '';
+        moreImages.classList.add('hidden');
       }
     })
     .then(() => new SimpleLightbox('.gallery a').refresh())
@@ -29,11 +28,12 @@ const checkInput = e => {
     });
 };
 
-const renderPhotos = elements => {
-  if (elements.length === 0) {
+const renderPhotos = (elements, allHits) => {
+  if (allHits === 0) {
     Notify.failure(
       'Sorry, there are no images matching your search query. Please try again.'
     );
+    moreImages.classList.add('hidden');
   } else if (elements.length) {
     const markup = elements
       .map(
@@ -70,10 +70,14 @@ const renderPhotos = elements => {
     gallery.innerHTML = markup;
 
     if (previousName !== elements.length) {
-      Notify.success(`Hooray! We found ${elements.totalHits} images.`);
+      Notify.success(`Hooray! We found ${allHits} images.`);
       gallery.innerHTML = markup;
+      moreImages.classList.add('hidden');
+      console.log('Totalhits:', allHits);
+    } else if (elements.length >= allHits) {
+      moreImages.classList.add('hidden');
+      Notify.info("We're sorry, but you've reached the end of search results.");
     }
-    console.log('ilość:');
   }
 };
 
