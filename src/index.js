@@ -19,12 +19,14 @@ const searchImages = e => {
 const placeImages = () => {
   fetchGallery(input.value, page)
     .then(res => {
+      page = 1; /// 1,2,2,2,2...
       if (page <= 0) {
         gallery.innerHTML = '';
         moreImages.classList.add('hidden');
       } else if (page >= 1) {
         moreImages.classList.remove('hidden');
       }
+
       renderPhotos(res.hits, res.totalHits);
       page += 1;
     })
@@ -35,7 +37,7 @@ const placeImages = () => {
 const renderPhotos = (elements, allHits) => {
   maxPages = allHits / 40;
   console.log(maxPages);
-  page = 1;
+
   if (maxPages <= 0) {
     moreImages.classList.add('hidden');
     Notify.failure(
