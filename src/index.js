@@ -10,42 +10,50 @@ const moreImages = document.querySelector('.load-more');
 let page = 1;
 let maxPages;
 
-const checkInput = e => {
+const searchImages = e => {
   e.preventDefault();
   gallery.innerHTML = '';
-  page = 1;
+  placeImages();
+};
+
+const placeImages = () => {
   fetchGallery(input.value, page)
     .then(res => {
+      if (page <= 0) {
+        gallery.innerHTML = '';
+        moreImages.classList.add('hidden');
+      } else if (page >= 1) {
+        moreImages.classList.remove('hidden');
+      }
       renderPhotos(res.hits, res.totalHits);
       page += 1;
     })
     .then(() => new SimpleLightbox('.gallery a').refresh())
-    .catch(error => {
-      console.log(error);
-    });
+    .catch(error => console.log(error));
 };
 
 const renderPhotos = (elements, allHits) => {
   maxPages = allHits / 40;
-  if (maxPages > 1) {
-    moreImages.classList.remove('hidden');
+  console.log(maxPages);
+  page = 1;
+  if (maxPages <= 0) {
+    moreImages.classList.add('hidden');
+    Notify.failure(
+      "We're sorry, but you've reached the end of search results."
+    );
   } else if (page <= 1) {
-    gallery.innerHTML = '';
-    if (allHits <= 0) {
-      moreImages.classList.add('hidden');
-      Notify.info("We're sorry, but you've reached the end of search results.");
-    }
-
     maxPages = allHits;
+
     if (allHits === 0) {
+      moreImages.classList.add('hidden');
       Notify.failure(
         'Sorry, there are no images matching your search query. Please try again.'
       );
-      moreImages.classList.add('hidden');
     } else {
       Notify.success(`Hooray! We found ${allHits} images.`);
     }
   }
+
   console.log('Totalhits:', allHits);
   const markup = elements
     .map(
@@ -83,9 +91,8 @@ const renderPhotos = (elements, allHits) => {
 };
 
 const loadMore = e => {
-  page += 1;
-  checkInput(e);
+  searchImages(e);
 };
 
-form.addEventListener('submit', checkInput);
+form.addEventListener('submit', searchImages);
 moreImages.addEventListener('click', loadMore);
