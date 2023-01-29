@@ -81,7 +81,7 @@ const renderPhotos = (elements, allHits) => {
   }
 };
 
-loadMore = () => {
+const loadMore = () => {
   page += 1;
   checkInput();
 };
