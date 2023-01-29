@@ -12,6 +12,8 @@ let maxPages;
 
 const checkInput = e => {
   e.preventDefault();
+  gallery.innerHTML = '';
+  page = 1;
   fetchGallery(input.value, page)
     .then(res => {
       renderPhotos(res.hits, res.totalHits);
@@ -33,8 +35,7 @@ const renderPhotos = (elements, allHits) => {
       moreImages.classList.add('hidden');
       Notify.info("We're sorry, but you've reached the end of search results.");
     }
-  }
-  if (page <= 1) {
+
     maxPages = allHits;
     if (allHits === 0) {
       Notify.failure(
@@ -81,9 +82,9 @@ const renderPhotos = (elements, allHits) => {
   gallery.innerHTML = markup;
 };
 
-const loadMore = () => {
+const loadMore = e => {
   page += 1;
-  checkInput();
+  checkInput(e);
 };
 
 form.addEventListener('submit', checkInput);
