@@ -81,10 +81,10 @@ const renderPhotos = (elements, allHits) => {
   }
 };
 
-const loadMore = () => {
-  page += 1;
-  checkInput();
-};
+// const loadMore = () => {
+//   page += 1;
+//   checkInput();
+// };
 
 form.addEventListener('submit', checkInput);
-moreImages.addEventListener('click', loadMore);
+// moreImages.addEventListener('click', loadMore);
