@@ -9,45 +9,38 @@ const gallery = document.querySelector('.gallery');
 const moreImages = document.querySelector('.load-more');
 let page = 1;
 let maxPages;
-let previousName = '';
 
-const placeImages = () => {
+const searchImages = isFirtCheck => {
   fetchGallery(input.value, page)
     .then(res => {
-      if (page <= 0) {
-        gallery.innerHTML = '';
+      maxPages = Math.ceil(res.totalHits / 40);
+      console.log('sumPages:', maxPages);
+      if (res.totalHits === 0) {
         moreImages.classList.add('hidden');
-      } else if (page >= 1) {
-        moreImages.classList.remove('hidden');
+        Notify.failure(
+          'Sorry, there are no images matching your search query. Please try again.'
+        );
+      } else {
+        if (isFirtCheck) {
+          Notify.success(`Hooray! We found ${res.totalHits} images.`);
+        }
+        if (maxPages > 1) {
+          moreImages.classList.remove('hidden');
+        }
+        if (page >= maxPages) {
+          moreImages.classList.add('hidden');
+          Notify.info(
+            "We're sorry, but you've reached the end of search results."
+          );
+        }
       }
-      renderPhotos(res.hits, res.totalHits);
+      renderPhotos(res.hits);
     })
     .then(() => new SimpleLightbox('.gallery a').refresh())
     .catch(error => console.log(error));
 };
 
-const renderPhotos = (elements, allHits) => {
-  maxPages = allHits / 40;
-  console.log('sumPages:', maxPages);
-  if (page <= 1) {
-    if (allHits < 0) {
-      moreImages.classList.add('hidden');
-      Notify.failure(
-        "We're sorry, but you've reached the end of search results."
-      );
-    }
-  }
-  maxPages = allHits;
-  if (maxPages <= 0) {
-    moreImages.classList.add('hidden');
-    Notify.failure(
-      'Sorry, there are no images matching your search query. Please try again.'
-    );
-  } else {
-    Notify.success(`Hooray! We found ${allHits} images.`);
-  }
-
-  console.log('Totalhits:', allHits);
+const renderPhotos = elements => {
   const markup = elements
     .map(
       ({
@@ -60,8 +53,8 @@ const renderPhotos = (elements, allHits) => {
         downloads,
       }) => {
         return `<div class="photo-card">
-   <a href="${webformatURL}">
-    <img src="${largeImageURL}" alt="${tags}" loading="lazy" /></a>
+   <a href="${largeImageURL}">
+    <img src="${webformatURL}" alt="${tags}" width="350" height="265"loading="lazy" /></a>
     <div class="info">
       <p class="info-item">
         <b>Likes</b>${likes}
@@ -80,26 +73,30 @@ const renderPhotos = (elements, allHits) => {
       }
     )
     .join('');
-  gallery.innerHTML = markup;
-};
+  gallery.innerHTML += markup;
+  if (page > 1) {
+    const { height: cardHeight } = document
+      .querySelector('.gallery .photo-card')
+      .getBoundingClientRect();
 
-const firstCheck = e => {
-  if (input.value !== previousName) {
-    maxPages = 0;
-    page = 1;
-    searchImages(e);
+    window.scrollBy({
+      top: cardHeight * 2,
+      behavior: 'smooth',
+    });
   }
 };
 
-const searchImages = e => {
+const firstCheck = e => {
   e.preventDefault();
+  maxPages = 0;
   gallery.innerHTML = '';
-  placeImages();
-  page += 1;
+  page = 1;
+  searchImages(true);
 };
 
-const loadMore = e => {
-  searchImages(e);
+const loadMore = () => {
+  page += 1;
+  searchImages(false);
 };
 
 form.addEventListener('submit', firstCheck);
