@@ -44,8 +44,8 @@ const renderPhotos = elements => {
   const markup = elements
     .map(
       ({
-        webformatURL,
         largeImageURL,
+        webformatURL,
         tags,
         likes,
         views,
@@ -54,7 +54,7 @@ const renderPhotos = elements => {
       }) => {
         return `<div class="photo-card">
    <a href="${largeImageURL}">
-    <img src="${webformatURL}" alt="${tags}" width="350" height="265"loading="lazy" /></a>
+    <img src="${webformatURL}" alt="${tags}" width="300" height="265"loading="lazy" /></a>
     <div class="info">
       <p class="info-item">
         <b>Likes</b>${likes}

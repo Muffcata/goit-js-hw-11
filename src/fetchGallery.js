@@ -7,7 +7,6 @@ export async function fetchGallery(newName, page) {
       method: 'get',
       url: `https://pixabay.com/api/?key=${API_KEY}&q=${newName}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=40`,
     });
-    console.log(response);
     return response.data;
   } catch (error) {
     console.log(error.message);
