@@ -9,17 +9,11 @@ const gallery = document.querySelector('.gallery');
 const moreImages = document.querySelector('.load-more');
 let page = 1;
 let maxPages;
-
-const searchImages = e => {
-  e.preventDefault();
-  gallery.innerHTML = '';
-  placeImages();
-};
+let previousName = '';
 
 const placeImages = () => {
   fetchGallery(input.value, page)
     .then(res => {
-      page = 1; /// 1,2,2,2,2...
       if (page <= 0) {
         gallery.innerHTML = '';
         moreImages.classList.add('hidden');
@@ -28,7 +22,6 @@ const placeImages = () => {
       }
 
       renderPhotos(res.hits, res.totalHits);
-      page += 1;
     })
     .then(() => new SimpleLightbox('.gallery a').refresh())
     .catch(error => console.log(error));
@@ -36,20 +29,19 @@ const placeImages = () => {
 
 const renderPhotos = (elements, allHits) => {
   maxPages = allHits / 40;
-  console.log(maxPages);
+  console.log('sumPages:', maxPages);
 
   if (maxPages <= 0) {
     moreImages.classList.add('hidden');
     Notify.failure(
-      "We're sorry, but you've reached the end of search results."
+      'Sorry, there are no images matching your search query. Please try again.'
     );
   } else if (page <= 1) {
     maxPages = allHits;
-
-    if (allHits === 0) {
+    if (allHits < 0) {
       moreImages.classList.add('hidden');
       Notify.failure(
-        'Sorry, there are no images matching your search query. Please try again.'
+        "We're sorry, but you've reached the end of search results."
       );
     } else {
       Notify.success(`Hooray! We found ${allHits} images.`);
@@ -92,9 +84,24 @@ const renderPhotos = (elements, allHits) => {
   gallery.innerHTML = markup;
 };
 
+const firstCheck = e => {
+  if (input.value !== previousName) {
+    maxPages = 0;
+    page = 1;
+    searchImages(e);
+  } else return;
+};
+
+const searchImages = e => {
+  e.preventDefault();
+  gallery.innerHTML = '';
+  placeImages();
+  page += 1;
+};
+
 const loadMore = e => {
   searchImages(e);
 };
 
-form.addEventListener('submit', searchImages);
+form.addEventListener('submit', firstCheck);
 moreImages.addEventListener('click', loadMore);
