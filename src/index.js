@@ -20,7 +20,6 @@ const placeImages = () => {
       } else if (page >= 1) {
         moreImages.classList.remove('hidden');
       }
-
       renderPhotos(res.hits, res.totalHits);
     })
     .then(() => new SimpleLightbox('.gallery a').refresh())
@@ -30,22 +29,22 @@ const placeImages = () => {
 const renderPhotos = (elements, allHits) => {
   maxPages = allHits / 40;
   console.log('sumPages:', maxPages);
-
-  if (maxPages <= 0) {
-    moreImages.classList.add('hidden');
-    Notify.failure(
-      'Sorry, there are no images matching your search query. Please try again.'
-    );
-  } else if (page <= 1) {
-    maxPages = allHits;
+  if (page <= 1) {
     if (allHits < 0) {
       moreImages.classList.add('hidden');
       Notify.failure(
         "We're sorry, but you've reached the end of search results."
       );
-    } else {
-      Notify.success(`Hooray! We found ${allHits} images.`);
     }
+  }
+  maxPages = allHits;
+  if (maxPages <= 0) {
+    moreImages.classList.add('hidden');
+    Notify.failure(
+      'Sorry, there are no images matching your search query. Please try again.'
+    );
+  } else {
+    Notify.success(`Hooray! We found ${allHits} images.`);
   }
 
   console.log('Totalhits:', allHits);
@@ -89,7 +88,7 @@ const firstCheck = e => {
     maxPages = 0;
     page = 1;
     searchImages(e);
-  } else return;
+  }
 };
 
 const searchImages = e => {
